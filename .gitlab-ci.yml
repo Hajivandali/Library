@@ -1,5 +1,25 @@
-run-test:
+image: mcr.microsoft.com/dotnet/core/sdk:3.1
+
+stages:
+  - build
+  - test
+  - deploy
+
+# Job برای ساخت پروژه
+build:
+  stage: build
   script:
-    - echo "test Level start :"
-    - npm install
-    - npm test 
+    - dotnet restore           # نصب پکیج‌های NuGet
+    - dotnet build             # ساخت پروژه
+
+# Job برای اجرای تست‌ها
+test:
+  stage: test
+  script:
+    - dotnet test              # اجرای تست‌ها
+
+# Job برای استقرار (Deploy)
+deploy:
+  stage: deploy
+  script:
+    - echo "Deploying to production..."  # این قسمت باید بر اساس نیاز شما تنظیم شود.

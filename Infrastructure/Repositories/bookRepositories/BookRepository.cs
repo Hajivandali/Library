@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Domain.Entitie;
 using Infrastructure.DataContext;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace Infrastructure.Repositories.bookRepositories
@@ -19,14 +20,10 @@ namespace Infrastructure.Repositories.bookRepositories
             _libraryContext = context;
         }
 
-        public BookRepository()
-        {
-            _libraryContext = new LibraryContext();
-        }
+       
 
 
-
-        public async Task AddAsync(Book book)
+        public async Task AddAsync(Book book)  // Add Book 
         {
             await _libraryContext.Books.AddAsync(book);
             await _libraryContext.SaveChangesAsync();
@@ -34,17 +31,17 @@ namespace Infrastructure.Repositories.bookRepositories
 
         }
 
-        public async Task DeleteAsync(long id)
+        public async Task DeleteAsync(long id)      // Remove Book 
         {
             var book = await _libraryContext.Books.FindAsync(id);
             if (book != null)
             {
-                _libraryContext.Books.Remove(book); // حذف کتاب
+                _libraryContext.Books.Remove(book); 
                 await _libraryContext.SaveChangesAsync();
             }
         }
 
-        public async Task<IEnumerable<Book>> GetAllAsync()
+        public async Task<IEnumerable<Book>> GetAllAsync() // GeT All by ID
         {
             return await _libraryContext.Books.ToListAsync();
 
@@ -52,10 +49,10 @@ namespace Infrastructure.Repositories.bookRepositories
 
         public async Task<Book> GetByIdAsync(int id)  // find by ID
         {
-            return await _libraryContext.Books.findAsync();
+            return await _libraryContext.Books.FindAsync(id);
         }
 
-        public async Task UpdateAsync(Book book)
+        public async Task UpdateAsync(Book book)   // Update by ID
         {
             _libraryContext.Books.Update(book);
             await _libraryContext.SaveChangesAsync();

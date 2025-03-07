@@ -1,5 +1,6 @@
 ﻿using Domain.Entitie;
 using Infrastructure.DataContext;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace Infrastructure.Repositories.userRepositories
 
         public async Task DeleteAsync(int id)// Delete user 
         {
-            var user= _libraryContext.Users.findAsync(id);
+            var user= _libraryContext.Users.FindAsync(id);
             if (user != null) { 
-                _libraryContext.Users.Remove(user);
+                _libraryContext.Users.Remove(await user);
                 await _libraryContext.SaveChangesAsync();
             }
 
@@ -38,9 +39,9 @@ namespace Infrastructure.Repositories.userRepositories
             return await _libraryContext.Users.ToListAsync();
         }
 
-        public async Task<User> GetByIdAsync(int id) // find User By ID
+        public async Task<User> GetBIdAsync(int id) // find User By ID
         {
-            return await _libraryContext.Users.findAsync();
+            return await _libraryContext.Users.FindAsync(id);
         }
 
         public async Task UpdateAsync(User user)

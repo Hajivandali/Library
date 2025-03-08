@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Data.SqlClient;
+using System.Linq;
+using System.Reflection;
+using test;
 
 
 public class Program
@@ -7,21 +10,20 @@ public class Program
     public static void Main()
     {
 
-        SqlConnection connection = new();
-        connection.ConnectionString = "Data Source=.;Initial Catalog=ACademy;Integrated Security=True";
-        connection.Open();
 
-        SqlCommand command = new SqlCommand();
+        Obj obj1 = new Obj();
+        List<model> models = obj1.res();
 
-        command.CommandText = "select * from student ";
-        command.Connection = connection;
+         
 
-        SqlDataReader sqlDataReader = command.ExecuteReader();
-        while (sqlDataReader.Read()) {
-            Console.WriteLine($"{sqlDataReader["Name"]} {sqlDataReader["Family"]}");
+
+        foreach (var Stu in models) 
+        {
+            Console.WriteLine($" Name: {Stu.Name } ID: {Stu.Id} AGE: {Stu.Age} ");
         }
 
-        connection.Close();
+
+        Console.ReadKey();
 
     }
 
